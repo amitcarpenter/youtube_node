@@ -1,0 +1,338 @@
+<%- include('header') %>
+
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="pagetitle">
+        <h3>Email Table</h3>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashbaord">Home</a></li>
+            <li class="breadcrumb-item active">Email Table</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="container">
+        <!-- <div class="row"> -->
+        <!-- <div class=""> -->
+        <div class="row email_table_btns_row">
+          <div class="col-2">
+            <div class="add_email">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addEmailModal">
+                Add Email
+              </button>
+            </div>
+          </div>
+          <div class="col-9">
+            <form action="/upload_email_csv" method="post" enctype="multipart/form-data" class="email_table_btns_form">
+              <label for="csvFile">Choose a CSV file:</label>
+              <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
+              <button type="submit">Upload CSV</button>
+            </form>
+          </div>
+        </div>
+
+        <!--  Modal add email data start-->
+        <div class="modal" id="addEmailModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- Modal Header -->
+              <div class="modal-header add_email_modal_hed">
+                <h4>Add Email</h4>
+                <button type="button" class="" data-bs-dismiss="modal" aria-label="">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body add_email_modal_body">
+                <div class="container">
+                  <form id="addEmailForm">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="email" id="emailInput" placeholder="Email" class="form-control"
+                            oninput="hideErrorMsgs('emError')" required>
+                          <span id="emError" style="color: red; margin-left: 10px;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="password" id="passwordInput" placeholder="Password" class="form-control"
+                            oninput="hideErrorMsgs('pswrdError')">
+                          <span id="pswrdError" style="color: red; margin-left: 10px;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="text" id="ipInput" placeholder="IP Address" class="form-control"
+                            oninput="hideErrorMsgs('ipAdrsError')">
+                          <span id="ipAdrsError" style="color: red; margin-left: 10px;"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+              <!-- modal footer -->
+              <div class=" add_email_modal_footer">
+                <div class="modal-footer modal_btn_email_save">
+                  <button type="submit" class="btn" onclick="validateEmailFeilds()">Add email</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal add email data end -->
+
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
+
+      <div class="container">
+        <!-- table start -->
+        <div class="row">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Table</h4>
+                <div class="table-responsive">
+                  <!-- EmailTable.ejs -->
+                  <table class="table table-striped main-table-content" id="emailTable">
+                    <thead>
+                      <tr>
+                        <th>S.no</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Ip Address</th>
+                        <th>Date</th>
+                        <th class="action_th">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% data.forEach(email=> { %>
+                        <tr>
+                          <td>1</td>
+                          <td>
+                            <%= email.email %>
+                          </td>
+                          <td>
+                            <%= email.password %>
+                          </td>
+                          <td>
+                            <%= email.ip %>
+                          </td>
+                          <td>
+                            <%= email.timestamp.toLocaleDateString() %>
+                          </td>
+                          <td class="action_btns">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                              data-bs-target="#editEmailDataModal">
+                              Edit
+                            </button>
+
+                            <!--  Modal edit data start-->
+                            <div class="modal" id="editEmailDataModal">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <!-- Modal Header -->
+                                  <div class="modal-header edit_email_modal_hed">
+                                    <h4>Edit Data</h4>
+                                    <button type="button" class="" data-bs-dismiss="modal" aria-label="">
+                                      <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                  </div>
+
+                                  <!-- Modal body -->
+                                  <div class="modal-body edit_email_modal_body">
+                                    <div class="container">
+                                      <form id="editEmailForm">
+                                        <div class="row">
+                                          <div class="col-12">
+                                            <div class="form-group">
+                                              <input type="email" id="editEmail" placeholder="Edit Email"
+                                                class="form-control"
+                                                oninput="clearErrorRedMsg('editEmailErrormsgshow')">
+                                              <span id="editEmailErrormsgshow" style="color: red
+                                              ; margin-left: 10px;"></span>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="form-group">
+                                              <input type="password" id="editPassword" placeholder="Edit Password"
+                                                class="form-control"
+                                                oninput="clearErrorRedMsg('editPasswordErrormsgshow')">
+                                              <span id="editPasswordErrormsgshow"
+                                                style="color: red; margin-left: 10px;"></span>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="form-group">
+                                              <input type="text" id="editIp" placeholder="Edit IP Address"
+                                                class="form-control" oninput="clearErrorRedMsg('editIpErrormsgshow')">
+                                              <span id="editIpErrormsgshow" style="color: red;margin-left: 10px;"></span>
+                                            </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="form-group">
+                                              <input type="date" id="editDate" placeholder="Date" class="form-control"
+                                                oninput="clearErrorRedMsg('editDateErrormsgshow')">
+                                              <span id="editDateErrormsgshow" style="color: red
+                                              ; margin-left: 10px;"></span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <!-- modal footer -->
+                                  <div class=" edit_email_modal_footer">
+                                    <div class="modal-footer modal_btn_data_update">
+                                      <button type="submit" class="btn"
+                                        onclick="editEmailDataValidation()">Update</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Modal edit data end -->
+
+                            <!-- Delete button -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                              data-bs-target="#deleteEmailDataModal" onclick="return ConfirmDelete()">
+                              Delete
+                            </button>
+
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("addEmailForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("emailInput").value;
+        const password = document.getElementById("passwordInput").value;
+        const ip = document.getElementById("ipInput").value;
+
+        try {
+          const response = await fetch("http://localhost:5001/Add_Email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, ip }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (data.success) {
+            console.log("Email added successfully:", data.email);
+            window.location.href = '/email_table';
+          } else {
+            console.error("Email addition failed:", data.error);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+
+    <script>
+      function ConfirmDelete() {
+        return confirm('Are you sure you want to delete data ?')
+      }
+    </script>
+
+    <script>
+      <!-- add email modal vallidation -->
+      // form validation
+      function validateEmailFeilds() {
+        let email = document.getElementById("emailInput").value;
+        let passwrd = document.getElementById("passwordInput").value;
+        let ipAddress = document.getElementById("ipInput").value;
+
+        if (email == '') {
+          document.getElementById("emError").innerHTML = 'Email required';
+        }
+        if (passwrd == '') {
+          document.getElementById("pswrdError").innerHTML = 'Password required';
+        }
+        if (ipAddress == '') {
+          document.getElementById("ipAdrsError").innerHTML = 'Ip required';
+        }
+      }
+
+      function hideErrorMsgs(errorId) {
+        document.getElementById(errorId).innerHTML = '';
+      }
+
+      // edit email data modal validation
+      function editEmailDataValidation() {
+        let emailEdit = document.getElementById("editEmail").value;
+        let passwrdEdit = document.getElementById("editPassword").value;
+        let ipEdit = document.getElementById("editIp").value;
+        let dateEdit = document.getElementById("editDate").value;
+
+        if (emailEdit == '') {
+          document.getElementById('editEmailErrormsgshow').innerHTML = 'required email';
+        }
+        if (passwrdEdit == '') {
+          document.getElementById('editPasswordErrormsgshow').innerHTML = 'required password';
+        }
+        if (ipEdit == '') {
+          document.getElementById('editIpErrormsgshow').innerHTML = 'required ip address';
+        }
+        if (dateEdit == '') {
+          document.getElementById('editDateErrormsgshow').innerHTML = 'required date';
+        }
+      }
+
+      function clearErrorRedMsg(errormsg) {
+        document.getElementById(errormsg).innerHTML = '';
+      }
+
+    </script>
+
+
+ <!-- file export data table script-->
+ <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+ <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+ <script>
+     $(document).ready(function () {
+         $('#emailTable').DataTable({
+             dom: 'Bfrtip',
+             buttons: [
+                 'copy', 'csv', 'excel', 'pdf', 'print'
+             ]
+         });
+     });
+ </script>
+ <!-- file export data table script-->
+
+
+
+    <%- include('footer') %>

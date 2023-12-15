@@ -1,0 +1,102 @@
+<%- include('header') %>
+  <!-- partial -->
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="pagetitle">
+        <h3>Sub Admin</h3>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+            <li class="breadcrumb-item active">Sub Admin</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="container">
+        <!-- table start -->
+        <div class="row">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Sub Admin </h4>
+                <div class="table-responsive">
+                  <table class="table table-striped sub-admin-table" id="myTable">
+                    <thead>
+                      <tr>
+                        <th>User Profile</th>
+                        <th>User Name</th>
+                        <th>User Email</th>
+                        <th>Mobile No.</th>
+                        <th>Progress</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% data.forEach(user=> { %>
+                        <tr>
+                          <td>
+                            <img src="./images/author.jpg" height="40px" alt="image">
+                          </td>
+                          <td>
+                            <%= user.fullName %>
+                          </td>
+                          <td>
+                            <%= user.email %>
+                          </td>
+                          <td>
+                            <%= user.mobileNumber %>
+                          </td>
+                          <td>
+                            <%= user.timestamp.toLocaleDateString() %>
+                          </td>
+                          <td class="view-btn">
+                            <button type="button" class="view-btn btn btn-outline-secondary p-1">
+                              <a href="/sub_admin_dashboard">View</a>
+                            </button>
+                          </td>
+                          <td class="status_btn">
+                            <button id="actDeactBtn" type="button" class="btn btn-success rounded-pill" onclick="return ConfirmActivateDeactivate()">Activate</button>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+     <!-- file export data table script-->
+     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+ 
+     <script>
+         $(document).ready(function() {
+     $('#myTable').DataTable( {
+         dom: 'Bfrtip',
+         buttons: [
+             'copy', 'csv', 'excel', 'pdf', 'print'
+         ]
+     } );
+ } );
+     </script>
+     <!-- file export data table script -->
+
+     <!-- script for alert messages for activate deactivate btn -->
+     <script>
+       function ConfirmActivateDeactivate() {
+        return confirm('You want to Deactivate')
+      }
+     </script>
+
+    <%- include('footer') %>

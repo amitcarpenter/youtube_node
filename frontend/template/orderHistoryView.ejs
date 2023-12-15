@@ -1,0 +1,49 @@
+<%- include("header") %>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="pagetitle">
+                <h3>Order History Details</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Order History details</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="container">
+                <!-- channel list row 1 -->
+                <div class="row channel_details_row">
+                    <h5>Channel Name</h5>
+                    <div class="col-12 col-sm-3">
+                        <div class="channel_img">
+                            <img src="./images/thumbnail2.jpg" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-8">
+                        <div class="channel_detail_heddings">
+                            <h4>Your Dream Destinations || website Web developement.</h4>
+                            <div class="channel_icons">
+                                <i id="viewsIcon" class="fa fa-eye icons_eye" aria-hidden="true"></i>
+                                <span id="viewsCount">0</span>
+
+                                <i id="subscribeIcon" class="fas fa-user icons_user"></i>
+                                <span id="subscribeCount">0</span>
+
+                                <i id="likeIcon" class="fa fa-thumbs-up icons_thumb" aria-hidden="true"></i>
+                                <span id="likeCount">0</span>
+
+                                <i id="dislikeIcon" class="fa fa-thumbs-down icons_thumb_down" aria-hidden="true"></i>
+                                <span id="dislikeCount">0</span>
+
+                                <i id="commentIcon" class="fa fa-comment icons_cmment" aria-hidden="true"></i>
+                                <span id="commentCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+
+        <%- include("footer") %>
